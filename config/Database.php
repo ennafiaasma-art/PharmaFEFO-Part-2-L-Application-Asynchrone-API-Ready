@@ -11,8 +11,8 @@ class Database{
 
             
            self::$instance=new PDO(
-            "mysql=host=" .$_ENV["HOST"]."dbname=" .$_ENV["DB_NAME"], $_ENV[DB_USER],
-            $_ENV[DB_PASSW]
+            "mysql=host=" .$_ENV["HOST"]."dbname=" .$_ENV["DB_NAME"], $_ENV["DB_USER"],
+            $_ENV["DB_PASSW"]
            );
 
            self::$instance->setAttribute(
