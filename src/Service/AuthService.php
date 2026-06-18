@@ -1,38 +1,49 @@
-<?php 
-require_once __DIR__ ."/../../config/Database.php";
-
-
-
+<?php
 
 class AuthService
 {
-    public static function isAuthenticated(): bool
+    private static function startSession(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+    }
+
+    public static function isAuthenticated(): bool
+    {
+        self::startSession();
 
         return isset($_SESSION['admin']);
     }
 
     public static function hasRole(string $role): bool
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
+        self::startSession();
 
-        return isset($_SESSION['role']) && $_SESSION['role'] === $role;
+        return isset($_SESSION['role'])
+            && $_SESSION['role'] === $role;
     }
 
     public static function checkRole(array $roles): bool
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+        self::startSession();
+
+        return isset($_SESSION['role'])
+            && in_array($_SESSION['role'], $roles);
+    }
+
+    public static function requireRole(string $role): void
+    {
+        self::startSession();
+
+        if (!self::isAuthenticated()) {
+            http_response_code(401);
+            die('Utilisateur non connecté');
         }
 
-        return isset($_SESSION['role']) &&
-               in_array($_SESSION['role'], $roles);
+        if (!self::hasRole($role)) {
+            http_response_code(403);
+            die('Erreur 403 - Accès interdit');
+        }
     }
 }
-
-?>
