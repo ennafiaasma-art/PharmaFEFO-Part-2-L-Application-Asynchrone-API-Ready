@@ -228,9 +228,7 @@
                     <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">Rôle de l'utilisateur</label>
                     <select class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
                         <option value="pharmacien_titulaire">Pharmacien Titulaire</option>
-                        <option value="pharmacien_assistant">Pharmacien Assistant</option>
                         <option value="preparateur" selected>Préparateur</option>
-                        <option value="stagiaire">Stagiaire</option>
                     </select>
                 </div>
 
@@ -245,7 +243,7 @@
             </form>
         </div>
     </div>
-
+    <script type="module" src="../../../public/js/dashboard.js"></script>
     <script>
         // Fonction pour afficher / masquer le Modal
         function toggleUserModal(show) {

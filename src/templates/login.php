@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pharmacie Login - MaPharma</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts (Inter) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -14,13 +12,10 @@
 </head>
 <body class="bg-gradient-to-br from-green-50 to-emerald-100 min-h-screen flex items-center justify-center p-4">
 
-    <!-- Card Container -->
     <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-emerald-50 transition-all duration-300 hover:shadow-2xl">
         
-        <!-- Logo & Header -->
         <div class="text-center mb-8">
             <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500 text-white mb-4 shadow-lg shadow-emerald-200">
-                <!-- Icon Pharmacie (Plus / Cross) -->
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-9 w-9" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                 </svg>
@@ -29,10 +24,8 @@
             <p class="text-sm text-gray-500 mt-1">Marhaban bika, rja3 l-hssab dialk</p>
         </div>
 
-        <!-- Form -->
         <form action="../controller/web/AuthController.php" method="POST" class="space-y-5">
             
-            <!-- Email Input -->
             <div>
                 <label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">L-brigh l-iliktroni (Email)</label>
                 <div class="relative">
@@ -47,7 +40,6 @@
                 </div>
             </div>
 
-            <!-- Password Input -->
             <div>
                 <div class="flex justify-between items-center mb-1.5">
                     <label for="password" class="block text-sm font-medium text-gray-700">Klimat l-mourour (Password)</label>
@@ -65,7 +57,6 @@
                 </div>
             </div>
 
-            <!-- Remember Me checkbox -->
             <div class="flex items-center justify-between pt-1">
                 <div class="flex items-center">
                     <input id="remember-me" name="remember-me" type="checkbox"
