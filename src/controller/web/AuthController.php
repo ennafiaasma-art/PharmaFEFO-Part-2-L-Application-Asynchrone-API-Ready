@@ -8,5 +8,5 @@ class AuthController{
       $db=  Database::getInstance();
         $this->repository=new AuthRepository($db);
     }
-    public function (){}
+   
 }
