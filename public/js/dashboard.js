@@ -1,7 +1,7 @@
 document.getElementById('adduser').addEventListener('submit', function(e) {
     e.preventDefault(); 
     
-const url = 'http://localhost/webapp/api/src/controller/web/MedicaleController.php';    const formData = new FormData(this);
+const url = 'http://localhost/webapp/api/src/controller/web/AdminController.php';    const formData = new FormData(this);
     const data = Object.fromEntries(formData.entries());
     
     fetch(url, {
@@ -14,24 +14,20 @@ const url = 'http://localhost/webapp/api/src/controller/web/MedicaleController.p
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Erreur réseau أو مشكلة في السيرفر');
+            throw new Error('Erreur réseau ');
         }
         return response.json();
     })
     .then(res => {
         if (res.status === 'success') {
-            // 1. حفظ رسالة النجاح
             sessionStorage.setItem('flash_success', res.message);
             
-            // 2. تفريغ الفورم
             this.reset();
             
-            // 3. إغلاق المودال باستخدام الدالة المعرفة في الـ HTML
             if (typeof toggleUserModal === "function") {
                 toggleUserModal(false);
             }
             
-            // 4. إعادة تحديث الصفحة الحالية لإظهار الـ Toast والـ User الجديد في الجدول
             window.location.reload(); 
             
         } else {

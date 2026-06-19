@@ -1,64 +1,43 @@
 <?php
 require_once __DIR__ . '/../../config/Database.php';
-
-class MedicaleRepository{
+class MedicaleRepository {
     private PDO $pdo;
-    public function __construct(PDO $pdo){
-        $this->pdo=$pdo;
-    }
-    public function insertProduct($batchNumero, $created_at, $expiratioDate, $quantity, $code) {
-    try {
-        $this->pdo->beginTransaction();
-        $queryProduct = 'INSERT INTO medicaments (name, code,description,created_at) 
-                         VALUES (:name, :description,:code, NOW())';        
-        $stmtProduct = $this->pdo->prepare($queryProduct);
-        $stmtProduct->execute([
-            ':name'        => $batchNumero,
-            ':code' => $code,
-            ':description' => 'No description provided', 
-        ]);
-        $productId = $this->pdo->lastInsertId();
-        
-        if (!$productId) {
-            throw new Exception("Impossible de récupérer l'ID du produit inséré.");
-        }
-        $queryLot = 'INSERT INTO lots (batchNumero, created_at, expiratioDate, quantity) 
-                     VALUES (:batchNumero, :created_at, :expiratioDate, :quantity, NOW())';       
-        $stmtLot = $this->pdo->prepare($queryLot);
-        $stmtLot->execute([
-            ':batchNumero'      => $batchNumero,      
-            ':created_at'      => $created_at,
-            ':expiratioDate' => $expiratioDate,
-            ':quantity'        => $quantity,    
-        ]);
-        $this->pdo->commit();
-        return true;
-        
-    } catch (PDOException $e) {
-        if ($this->pdo->inTransaction()) {
-            $this->pdo->rollBack();
-        }
-        throw new Exception("Erreur DB: " . $e->getMessage());
-    }
-}
 
-
- public function GetAllProducts() {
-    try {
-        $query = 'SELECT 
-                    m.name AS product_name, 
-                    m.code, 
-                    l.batchNumero, 
-                    l.expirationDate,  
-                    l.status
-                  FROM products p
-                  INNER JOIN lots l ON m.id = l.medicament_id
-                  ORDER BY l.expirationDate ASC';
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute();       
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException) {
-        return [];
+    public function __construct(PDO $pdo) {
+        $this->pdo = $pdo;
     }
-}
-}
+
+   
+    public function GetAllUsers() {
+        try {
+            $query = 'SELECT name, email, role FROM users ORDER BY name ASC';
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute();       
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new Exception("Erreur DB lors de la récupération: " . $e->getMessage());
+        }
+    }
+
+   
+    public function insertUser($name, $email, $role) {
+        try {
+            $checkQuery = 'SELECT COUNT(*) FROM users WHERE email = :email';
+            $checkStmt = $this->pdo->prepare($checkQuery);
+            $checkStmt->execute([':email' => $email]);
+            if ($checkStmt->fetchColumn() > 0) {
+                throw new Exception("Cette adresse email est déjà utilisée.");
+            }
+
+            $query = 'INSERT INTO users ( name, email, role) VALUES (:name, :email, :role)';
+            $stmt = $this->pdo->prepare($query);
+            $stmt->execute([
+                ':name' => $name,
+                ':email'    => $email,
+                ':role'     => $role
+            ]);
+            return true;
+        } catch (PDOException $e) {
+            throw new Exception("Erreur DB lors de l'insertion: " . $e->getMessage());
+        }
+    } }

@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . '/../../../config/database.php';
-// تأكد من أن الـ Repository يحتوي على الدوال الخاصة بالمستخدمين أو قم بتغيير المسار إذا كان هناك UserRepository
 require_once __DIR__ . '/../../repository/MedicaleRepository.php';
 
 class MedicaleController 
@@ -18,17 +17,17 @@ class MedicaleController
     }
 
     public function handleRequest() {
-        // إذا كان الطلب قادماً بصيغة JSON، نقوم بقراءته وتحويله إلى مصفوفة PHP
+        header('Content-Type: application/json');
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && strpos($_SERVER['CONTENT_TYPE'] ?? '', 'application/json') !== false) {
             $jsonInput = file_get_contents('php://input');
             $decodedData = json_decode($jsonInput, true);
             
             if (is_array($decodedData)) {
-                $_POST = $decodedData; // نملأ مصفوفة $_POST بالبيانات القادمة من الـ Fetch
+                $_POST = $decodedData; 
             }
         }
 
-        header('Content-Type: application/json');
         $method = $_SERVER['REQUEST_METHOD'];
 
         if ($method === 'POST') {
@@ -40,11 +39,8 @@ class MedicaleController
         }
     }
 
-    // جلب المستخدمين لعرضهم في جدول المستخدمين
     public function index() {
         try {
-            // ملاحظة: تأكد أن هذه الدالة موجودة في الـ Repository الخاص بك لجلب المستخدمين
-            // إذا كانت هناك دالة مثل getAllUsers() قم بتغييرها هنا
             $users = $this->repository->GetAllUsers(); 
             
             echo json_encode([
@@ -61,38 +57,27 @@ class MedicaleController
         }
     }
 
-    // حفظ مستخدم جديد
     public function store() 
     {
-        header('Content-Type: application/json');
-        
-        $json = file_get_contents('php://input');
-        $data = json_decode($json, true);
-
-        if (!$data) {
-            parse_str($json, $data);
-        }
+        $data = $_POST;
 
         if (!$data || empty($data)) {
-            $this->sendResponse('error', 'Aucune donnée reçue.');
+            $this->sendResponse('error', 'Aucune donnée reçue ou échec de lecture.');
         }
         
-        // استقبال بيانات المستخدم المتوافقة مع الفورم والجافا سكريبت
-        $fullname = isset($data['fullname']) ? htmlspecialchars(trim($data['fullname'])) : '';
+        $name = isset($data['name']) ? htmlspecialchars(trim($data['name'])) : '';
         $email    = isset($data['email']) ? htmlspecialchars(trim($data['email'])) : '';
         $role     = isset($data['role']) ? htmlspecialchars(trim($data['role'])) : ''; 
 
-        // التحقق من أن حقول المستخدم ليست فارغة
-        if (empty($fullname) || empty($email) || empty($role)) {
+        if (empty($name) || empty($email) || empty($role)) {
             $this->sendResponse('error', 'Tous les champs (Nom Complet, Adresse Email, Rôle) sont obligatoires.');
+            exit;
         }
 
         try { 
-            // تأكد من وجود دالة insertUser بداخل الـ MedicaleRepository الخاص بك
-            // إذا كانت الدالة بأسماء بارامترات مختلفة، قم بتعديلها هنا لتطابق الـ Repository
-            $this->repository->insertUser($fullname, $email, $role);
+            $this->repository->insertUser($name, $email, $role);
             
-            $this->sendResponse('success', "L'utilisateur " . $fullname . " a été ajouté avec succès !");
+            $this->sendResponse('success', "L'utilisateur " . $name . " a été ajouté avec succès !");
         } catch (Exception $e) {
             $this->sendResponse('error', 'Erreur lors de l\'enregistrement: ' . $e->getMessage());
         }
