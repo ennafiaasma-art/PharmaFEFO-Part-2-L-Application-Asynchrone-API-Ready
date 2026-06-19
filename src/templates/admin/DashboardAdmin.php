@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Gestion Pharma</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -216,17 +218,17 @@
             <form action="" id="adduser" method="POST" class="p-6 space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">Nom Complet</label>
-                    <input type="text" placeholder="Ex: Dr. Anass El Amrani" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
+                    <input type="text" name="fullname" placeholder="Ex: Dr. Anass El Amrani" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
                 </div>
 
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">Adresse Email</label>
-                    <input type="email" placeholder="Ex: a.elamrani@pharma.ma" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
+                    <input type="email"  name="email"placeholder="Ex: a.elamrani@pharma.ma" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
                 </div>
 
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">Rôle de l'utilisateur</label>
-                    <select class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
+                    <select name="role" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/10 transition-all">
                         <option value="pharmacien_titulaire">Pharmacien Titulaire</option>
                         <option value="preparateur" selected>Préparateur</option>
                     </select>
@@ -243,7 +245,7 @@
             </form>
         </div>
     </div>
-    <script type="module" src="../../../public/js/dashboard.js"></script>
+    <script type="text/javascript" src="../../../public/js/dashboard.js"></script>
     <script>
         // Fonction pour afficher / masquer le Modal
         function toggleUserModal(show) {
