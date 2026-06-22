@@ -262,3 +262,6 @@ PATCH /api/v1/batches/expire
 # Objectif principal
 
 Mettre en place une gestion de stock pharmaceutique moderne utilisant le principe FEFO, avec une interface réactive grâce aux appels asynchrones (AJAX/Fetch API) et une architecture MVC évolutive.
+  # deploiment de l'applicaqtion
+
+  [PharmaFEFO](http://pharmafefo-part-2-synchrone-api-ready.railway.internal)

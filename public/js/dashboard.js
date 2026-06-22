@@ -1,7 +1,8 @@
 document.getElementById('adduser').addEventListener('submit', function(e) {
     e.preventDefault(); 
     
-const url = 'http://localhost/webapp/api/src/controller/web/AdminController.php';    const formData = new FormData(this);
+const url = 'http://localhost/webapp/api/src/controller/web/AdminController.php'; 
+   const formData = new FormData(this);
     const data = Object.fromEntries(formData.entries());
     
     fetch(url, {
